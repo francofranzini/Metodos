@@ -1,4 +1,4 @@
-// Ejercicio 7 de la Práctica 7
+// Ejercicio 8 de la Práctica 7
 clc()
 clear()
 
@@ -60,6 +60,29 @@ for i = n-1:-1:1
 end
 endfunction
 
-x = [0, 0.15, 0.31, 0.5, 0.6, 0.75]
-y = [1, 1.004, 1.]
+x = [4, 4.2, 4.5, 4.7, 5.1, 5.5, 5.9, 6.3, 6.8, 7.1]
+y = [102.56, 113.18, 130.11, 142.05, 167.53, 195.14, 224.87, 256.73, 299.5, 326.72]
+
+A = A_mc(x, 1)
+[p1, e1] = MinCuad_pol(A, y)
+
+disp(p1)
+disp(sum(e1.^2))
+A = A_mc(x, 2)
+[p2, e2] = MinCuad_pol(A, y)
+disp(p2)
+disp(sum(e2.^2))
+A = A_mc(x, 3)
+[p3, e3] = MinCuad_pol(A, y)
+disp(p3)
+disp(sum(e3.^2))
+
+plot(x, y, "bo")
+plot(x, p1, "r")
+plot(x, p2, "g")
+plot(x, p3, "k")
+xgrid()
+title('Comparacion de Curvas')
+legend('Lineal', 'Cuadratica', 'Cubica')
+
 
