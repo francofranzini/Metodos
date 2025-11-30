@@ -1,0 +1,139 @@
+funcprot(0)
+// Regla del Trapecio
+function w = Trapecio(a,b,f)
+    // Entrada: a,b = extremos de integración; f = función de Scilab
+    // Salida: w = aproximación de la integral de f en [a,b] por la Regla del Trapecio
+    w = ((b-a)/2)*(f(a)+f(b))
+endfunction
+
+// Regla de Simpson
+function w = Simpson(a,b,f)
+    // Entrada: a,b = extremos de integración; f = función de Scilab
+    // Salida: w = aproximación de la integral de f en [a,b] por la Regla de Simpson
+    h = (b-a)/2
+    w = (h/3)*(f(a)+4*f(a+h)+f(b))
+endfunction
+
+function w = compuestoTrapecio(a, b, f, n)
+    h = (b-a)/n
+    w = (1/2)*f(a) + (1/2)*f(b)
+    for j = 1:n-1 do
+        w = w + f(a+j*h)
+    end
+    w = h*w
+    
+endfunction
+
+function w = compuestoSimpson(a,b,f,n)
+    h = (b-a)/n
+    w = 0
+    if n == 2 then
+        w = Simpson(a, b, f)
+    else
+        //w = f(x0) + f(xn)
+        w = f(a) + f(b)
+        for j = 1:n-1
+            if modulo(j, 2) == 0 then
+               w = w + 2*f(a+j*h) 
+            else
+               w = w + 4*f(a+j*h)
+            end
+        end
+        //w = f(x0) + 4f(x1) + 2f(x2) + 4f(x3) + ... + f(xn)
+        w = (h/3)*w
+    end
+    
+endfunction
+
+
+disp('a)')
+function y = f(x)
+    y = 1/x
+endfunction
+a = 1
+b = 3
+n = 4
+int_trap = compuestoTrapecio(a, b, f,n)
+int_simp = compuestoSimpson(a,b,f,n)
+int_real = intg(a,b,f)
+disp("Utilizando la Regla del Trapecio se tiene: "+string(int_trap))
+disp("Utilizando la Regla de Simpson se tiene: "+string(int_simp))
+disp("El valor real (calculado con la función intg) es: "+string(int_real))
+
+
+disp('b)')
+function y = f(x)
+    y = x^3
+endfunction
+a = 0
+b = 2
+n = 4
+int_trap = compuestoTrapecio(a, b, f,n)
+int_simp = compuestoSimpson(a,b,f,n)
+int_real = intg(a,b,f)
+disp("Utilizando la Regla del Trapecio se tiene: "+string(int_trap))
+disp("Utilizando la Regla de Simpson se tiene: "+string(int_simp))
+disp("El valor real (calculado con la función intg) es: "+string(int_real))
+
+disp('c)')
+function y = f(x)
+    y = x*(1+x^2)^1/2
+endfunction
+a = 0
+b = 3
+n = 6
+int_trap = compuestoTrapecio(a, b, f,n)
+int_simp = compuestoSimpson(a,b,f,n)
+int_real = intg(a,b,f)
+
+disp("Utilizando la Regla del Trapecio se tiene: "+string(int_trap))
+disp("Utilizando la Regla de Simpson se tiene: "+string(int_simp))
+disp("El valor real (calculado con la función intg) es: "+string(int_real))
+
+
+disp('d)')
+function y = f(x)
+    y = sin(%pi*x)
+endfunction
+a = 0
+b = 1
+n = 8
+int_trap = compuestoTrapecio(a, b, f,n)
+int_simp = compuestoSimpson(a,b,f,n)
+int_real = intg(a,b,f)
+
+disp("Utilizando la Regla del Trapecio se tiene: "+string(int_trap))
+disp("Utilizando la Regla de Simpson se tiene: "+string(int_simp))
+disp("El valor real (calculado con la función intg) es: "+string(int_real))
+
+disp('e)')
+function y = f(x)
+    y = x*sin(x)
+endfunction
+a = 0
+b = 2*%pi
+n = 8
+int_trap = compuestoTrapecio(a, b, f,n)
+int_simp = compuestoSimpson(a,b,f,n)
+int_real = intg(a,b,f)
+
+disp("Utilizando la Regla del Trapecio se tiene: "+string(int_trap))
+disp("Utilizando la Regla de Simpson se tiene: "+string(int_simp))
+disp("El valor real (calculado con la función intg) es: "+string(int_real))
+
+disp('f)')
+funcprot(0)
+function y = f(x)
+    y = (x^2)*(%e)^x
+endfunction
+a = 0
+b = 1
+n = 8
+int_trap = compuestoTrapecio(a, b, f,n)
+int_simp = compuestoSimpson(a,b,f,n)
+int_real = intg(a,b,f)
+
+disp("Utilizando la Regla del Trapecio se tiene: "+string(int_trap))
+disp("Utilizando la Regla de Simpson se tiene: "+string(int_simp))
+disp("El valor real (calculado con la función intg) es: "+string(int_real))
+
